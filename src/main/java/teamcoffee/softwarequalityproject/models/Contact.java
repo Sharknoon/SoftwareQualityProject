@@ -11,15 +11,14 @@ import teamcoffee.softwarequalityproject.enums.Salutations;
 public class Contact {
 
     public final Salutations salutation;
-    public final LetterSalutations letter_salutation;
+    public final LetterSalutations letter_salutation = LetterSalutations.FRAU_HERR;
     public final String title;
     public final Genders gender;
     public final String firstname;
     public final String lastname;
 
-    public Contact(Salutations salutation, LetterSalutations letter_salutation, String title, Genders gender, String firstname, String lastname) {
+    public Contact(Salutations salutation, String title, Genders gender, String firstname, String lastname) {
         this.salutation = salutation;
-        this.letter_salutation = letter_salutation;
         this.title = title;
         this.gender = gender;
         this.firstname = firstname;
