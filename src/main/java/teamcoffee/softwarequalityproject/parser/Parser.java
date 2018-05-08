@@ -6,8 +6,6 @@ package teamcoffee.softwarequalityproject.parser;
  */
 public class Parser {
     
-    public static Result isValid(String text){
-        
-    }
+
     
 }
