@@ -83,7 +83,7 @@ public class FXMLController implements Initializable {
 
         choiceBoxGender.getSelectionModel()
                 .selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    int language = choiceBoxLetterSalutation
+                    int language = 0;
                     switch (newValue) {
                         case FEMALE:
                             
