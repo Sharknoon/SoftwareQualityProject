@@ -1,19 +1,23 @@
 package teamcoffee.softwarequalityproject.models;
 
+import teamcoffee.softwarequalityproject.enums.Genders;
+import teamcoffee.softwarequalityproject.enums.LetterSalutations;
+import teamcoffee.softwarequalityproject.enums.Salutations;
+
 /**
  *
  * @author Josua Frank
  */
 public class Contact {
 
-    public final String salutation;
-    public final String letter_salutation;
+    public final Salutations salutation;
+    public final LetterSalutations letter_salutation;
     public final String title;
-    public final String gender;
+    public final Genders gender;
     public final String firstname;
     public final String lastname;
 
-    public Contact(String salutation, String letter_salutation, String title, String gender, String firstname, String lastname) {
+    public Contact(Salutations salutation, LetterSalutations letter_salutation, String title, Genders gender, String firstname, String lastname) {
         this.salutation = salutation;
         this.letter_salutation = letter_salutation;
         this.title = title;
@@ -22,11 +26,11 @@ public class Contact {
         this.lastname = lastname;
     }
 
-    public String getSalutation() {
+    public Salutations getSalutation() {
         return salutation;
     }
 
-    public String getLetter_salutation() {
+    public LetterSalutations getLetter_salutation() {
         return letter_salutation;
     }
 
@@ -34,7 +38,7 @@ public class Contact {
         return title;
     }
 
-    public String getGender() {
+    public Genders getGender() {
         return gender;
     }
 
