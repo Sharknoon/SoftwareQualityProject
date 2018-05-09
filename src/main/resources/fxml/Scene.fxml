@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="303.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamcoffee.softwarequalityproject.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="303.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamcoffee.softwarequalityproject.FXMLController">
    <children>
       <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -29,7 +29,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onButtonParseClicked" text="Zuordnen" GridPane.columnIndex="2" />
+            <Button fx:id="buttonParse" defaultButton="true" mnemonicParsing="false" onAction="#onButtonParseClicked" text="Zuordnen" GridPane.columnIndex="2" />
             <TextField fx:id="textFieldInput" promptText="Bitte Kontakt eingeben" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" />
             <Label text="Anrede" GridPane.rowIndex="1" />
             <Label text="Briefanrede" GridPane.rowIndex="2" />
@@ -40,7 +40,7 @@
             <TextField fx:id="textFieldTitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ChoiceBox fx:id="choiceBoxSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="choiceBoxLetterSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ChoiceBox fx:id="choiceBoxGender" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />

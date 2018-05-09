@@ -1,5 +1,6 @@
 package teamcoffee.softwarequalityproject.checkers;
 
+import java.util.EnumSet;
 import teamcoffee.softwarequalityproject.enums.Genders;
 import teamcoffee.softwarequalityproject.enums.Salutations;
 
@@ -8,19 +9,29 @@ import teamcoffee.softwarequalityproject.enums.Salutations;
  * @author Josua Frank
  */
 public class Salutation {
-    
-    public static boolean isSalutation(String string){
-        return false;
-    }
-    
-    public static Salutations getSalutation(String string){
 
-        return Salutations.NOT_SPECIFIED;
+    public static boolean isSalutation(String string) {
+        return EnumSet
+                .allOf(Salutations.class)
+                .stream()
+                .filter(s -> s.getName().toLowerCase().contains(string.toLowerCase())
+                || s.name().toLowerCase().contains(string.toLowerCase()))
+                .findAny()
+                .isPresent();
     }
-    
-    public static Genders getGender(String string){
 
-        return Genders.NOT_SPECIFIED;
+    public static Salutations getSalutation(String string) {
+        return EnumSet
+                .allOf(Salutations.class)
+                .stream()
+                .filter(s -> s.getName().toLowerCase().contains(string.toLowerCase())
+                || s.name().toLowerCase().contains(string.toLowerCase()))
+                .findFirst()
+                .orElse(Salutations.NOT_SPECIFIED);
     }
-    
+
+    public static Genders getGender(String string) {
+        return getSalutation(string).getGender();
+    }
+
 }
