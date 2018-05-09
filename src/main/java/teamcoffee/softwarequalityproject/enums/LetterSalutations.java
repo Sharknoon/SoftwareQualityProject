@@ -75,7 +75,7 @@ public enum LetterSalutations {
                 return Genders.FEMALE;
             case FRAU_HERR:
             case MS_MR:
-                return Genders.NOT_SPECIFIED;
+                return Genders.X;
         }
         return Genders.NOT_SPECIFIED;
     }
