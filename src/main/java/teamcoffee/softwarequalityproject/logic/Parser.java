@@ -42,14 +42,15 @@ public class Parser {
             } else // Nachname erkannt anhand von Komma
             if (splitPart.charAt(splitPart.length() - 1) == ',') {
                 lastName = splitPart.substring(0, splitPart.length() - 1);
-            } else // Letztes Wort und Nachname noch nicht gefunden    
-            if (split.length - 1 == zaehler && lastName.isEmpty()) {
-                lastName = splitPart;
-            } else {
+            } else {//Vorname noch nicht gefunden
                 if (firstName.isEmpty()) {
                     firstName = splitPart;
                 } else {
-                    firstName = firstName + " " + splitPart;
+                    if (lastName.isEmpty()) {
+                        lastName = splitPart;
+                    } else {
+                        lastName = lastName + " " + splitPart;
+                    }
                 }
             }
             zaehler++;

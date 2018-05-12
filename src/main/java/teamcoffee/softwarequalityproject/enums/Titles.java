@@ -18,6 +18,20 @@ public class Titles {
 
     private final Set<String> titles = new HashSet<>();
 
+    public Titles() {
+        //Vorgelernte Ausdruecke
+        titles.add("Dr.");
+        titles.add("Professor");
+        titles.add("Prof.");
+        titles.add("rer.");
+        titles.add("Nat.");
+        titles.add("Dipl.");
+        titles.add("Ing.");
+        titles.add("Dr.-Ing.");
+        titles.add("h.c.");
+        titles.add("mult.");
+    }
+
     public Set<String> getTitles() {
         return titles;
     }
