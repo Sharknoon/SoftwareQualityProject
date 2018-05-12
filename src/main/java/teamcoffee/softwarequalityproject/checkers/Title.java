@@ -1,13 +1,22 @@
 package teamcoffee.softwarequalityproject.checkers;
 
+import teamcoffee.softwarequalityproject.db.DB;
+
 /**
  *
  * @author Josua Frank
  */
 public class Title {
+
+    private static String title;
     
-    public static boolean isTitle(String string){
-        return false;
+    public static boolean isTitle(String string) {
+        title = string.trim().toLowerCase();
+        return DB
+                .getTitles()
+                .getTitles()
+                .stream()
+                .anyMatch(s -> s.toLowerCase().contains(title));
     }
-    
+
 }

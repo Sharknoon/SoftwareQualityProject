@@ -14,6 +14,7 @@ import teamcoffee.softwarequalityproject.enums.Salutations;
  */
 public class Contact {
 
+    private final StringProperty input = new SimpleStringProperty("");
     private final ObjectProperty<Salutations> salutation = new SimpleObjectProperty<>();
     private final ObjectProperty<LetterSalutations> letter_salutation = new SimpleObjectProperty<>();
     private final StringProperty title = new SimpleStringProperty();
@@ -24,7 +25,8 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(Salutations salutation, String title, Genders gender, String firstname, String lastname) {
+    public Contact(String input, Salutations salutation, String title, Genders gender, String firstname, String lastname) {
+        this.input.set(input);
         this.salutation.set(salutation);
         if (salutation != null) {
             switch (salutation) {

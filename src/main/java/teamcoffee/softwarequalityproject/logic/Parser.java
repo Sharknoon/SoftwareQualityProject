@@ -1,4 +1,4 @@
-package teamcoffee.softwarequalityproject.parser;
+package teamcoffee.softwarequalityproject.logic;
 
 import teamcoffee.softwarequalityproject.checkers.Salutation;
 import teamcoffee.softwarequalityproject.checkers.Title;
@@ -34,7 +34,11 @@ public class Parser {
                 gender = Salutation.getGender(splitPart);
             } else // Überprüfung auf Titel
             if (Title.isTitle(splitPart) == true) {
-                title = title + " " + splitPart;
+                if (title.isEmpty()) {
+                    title = splitPart;
+                } else {
+                    title = title + " " + splitPart;
+                }
             } else // Nachname erkannt anhand von Komma
             if (splitPart.charAt(splitPart.length() - 1) == ',') {
                 lastName = splitPart.substring(0, splitPart.length() - 1);
@@ -71,7 +75,7 @@ public class Parser {
             String Error = "Keinen Nachname angegeben";
             result.addError(Error);
         }
-        Contact contact = new Contact(salutation, title, gender, firstName, lastName);
+        Contact contact = new Contact(parse, salutation, title, gender, firstName, lastName);
         result.setContact(contact);
         return result;
     }

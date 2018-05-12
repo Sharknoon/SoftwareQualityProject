@@ -20,7 +20,9 @@
         </columnConstraints>
         <rowConstraints>
             <RowConstraints />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+          <RowConstraints prefHeight="0.0" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -31,19 +33,20 @@
          <children>
             <Button fx:id="buttonParse" defaultButton="true" mnemonicParsing="false" onAction="#onButtonParseClicked" text="Zuordnen" GridPane.columnIndex="2" />
             <TextField fx:id="textFieldInput" promptText="Bitte Kontakt eingeben" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" />
-            <Label text="Anrede" GridPane.rowIndex="1" />
-            <Label text="Briefanrede" GridPane.rowIndex="2" />
-            <Label text="Titel" GridPane.rowIndex="3" />
-            <Label text="Geschlecht" GridPane.rowIndex="4" />
-            <Label text="Vorname" GridPane.rowIndex="5" />
-            <Label text="Nachname" GridPane.rowIndex="6" />
-            <TextField fx:id="textFieldTitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <ChoiceBox fx:id="choiceBoxSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ChoiceBox fx:id="choiceBoxLetterSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="choiceBoxGender" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Anrede" GridPane.rowIndex="3" />
+            <Label text="Briefanrede" GridPane.rowIndex="4" />
+            <Label text="Titel" GridPane.rowIndex="5" />
+            <Label text="Geschlecht" GridPane.rowIndex="6" />
+            <Label text="Vorname" GridPane.rowIndex="7" />
+            <Label text="Nachname" GridPane.rowIndex="8" />
+            <TextField fx:id="textFieldTitle" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <ChoiceBox fx:id="choiceBoxSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="choiceBoxLetterSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ChoiceBox fx:id="choiceBoxGender" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="labelError" prefHeight="0.0" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -14,8 +14,12 @@ public class Salutation {
         return EnumSet
                 .allOf(Salutations.class)
                 .stream()
-                .filter(s -> s.getName().toLowerCase().contains(string.toLowerCase())
-                || s.name().toLowerCase().contains(string.toLowerCase()))
+                .filter(s -> {
+                    String searchString = string.replaceAll("[^a-zA-ZäöüÄÖÜ]*", "").toLowerCase();
+                    return s.getName().toLowerCase().contains(searchString)
+                            || s.name().toLowerCase().contains(searchString)
+                            || s.getAlternativeNames().stream().map(String::toLowerCase).anyMatch(a -> a.contains(searchString));
+                })
                 .findAny()
                 .isPresent();
     }
@@ -24,8 +28,12 @@ public class Salutation {
         return EnumSet
                 .allOf(Salutations.class)
                 .stream()
-                .filter(s -> s.getName().toLowerCase().contains(string.toLowerCase())
-                || s.name().toLowerCase().contains(string.toLowerCase()))
+                .filter(s -> {
+                    String searchString = string.replaceAll("[^a-zA-ZäöüÄÖÜ]*", "").toLowerCase();
+                    return s.getName().toLowerCase().contains(searchString)
+                            || s.name().toLowerCase().contains(searchString)
+                            || s.getAlternativeNames().stream().map(String::toLowerCase).anyMatch(a -> a.contains(searchString));
+                })
                 .findFirst()
                 .orElse(Salutations.NOT_SPECIFIED);
     }
