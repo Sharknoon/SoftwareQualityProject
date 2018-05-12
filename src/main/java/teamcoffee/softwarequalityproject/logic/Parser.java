@@ -59,22 +59,57 @@ public class Parser {
         Result result = new Result();
         // Leeres Feld = Falsch
         if (salutation == Salutations.NOT_SPECIFIED && title.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
-            String Error = "Feld ist leer";
-            result.addError(Error);
+            String error = "Feld ist leer";
+            result.addError(error);
         }
         // Weder anrede noch Vorname gefunden 
         if (salutation == Salutations.NOT_SPECIFIED && firstName.isEmpty()) {
 
-            String Error = "Keine Anrede gefunden";
-            result.addError(Error);
+            String error = "Keine Anrede gefunden";
+            result.addError(error);
 
-            Error = "Keinen Vorname gefunden";
-            result.addError(Error);
+            error = "Keinen Vorname gefunden";
+            result.addError(error);
         }
         //Kein Nachname angegeben
         if (lastName.isEmpty()) {
-            String Error = "Keinen Nachname angegeben";
-            result.addError(Error);
+            String error = "Keinen Nachname angegeben";
+            result.addError(error);
+        }
+        //Ueberpruefung auf Grossschreibung
+        if (!firstName.isEmpty() && !Character.isUpperCase(firstName.charAt(0))) {
+            String newFirstName = firstName.substring(0, 1).toUpperCase();
+            if (firstName.length() > 1) {
+                newFirstName = newFirstName + firstName.substring(1);
+            }
+            firstName = newFirstName;
+        }
+        String[] lastnames = lastName.split(" ");
+        String lastLastname;
+        if (lastnames.length > 0) {
+            lastLastname = lastnames[lastnames.length - 1];
+        } else {
+            lastLastname = "";
+        }
+        if (!lastLastname.isEmpty() && !Character.isUpperCase(lastLastname.charAt(0))) {
+            String newLastName = lastLastname.substring(0, 1).toUpperCase();
+            if (lastLastname.length() > 1) {
+                newLastName = newLastName + lastLastname.substring(1);
+            }
+            lastName = "";
+            for (int i = 0; i < lastnames.length - 1; i++) {
+                if (i > 0) {
+                    lastName = lastName + " " + lastnames[i];
+                } else {
+                    lastName = lastnames[i];
+                }
+            }
+            if (!lastName.isEmpty()) {
+                lastName = lastName + " " + newLastName;
+            } else {
+                lastName = newLastName;
+            }
+
         }
         Contact contact = new Contact(parse, salutation, title, gender, firstName, lastName);
         result.setContact(contact);

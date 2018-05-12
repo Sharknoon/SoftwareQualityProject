@@ -62,7 +62,7 @@ public class FXMLController implements Initializable {
         textFieldTitle.textProperty().bindBidirectional(currentContact.titleProperty());
         textFieldFirstName.textProperty().bindBidirectional(currentContact.firstnameProperty());
         textFieldLastName.textProperty().bindBidirectional(currentContact.lastnameProperty());
-        
+
         choiceBoxGender.valueProperty().bindBidirectional(currentContact.genderProperty());
         choiceBoxLetterSalutation.valueProperty().bindBidirectional(currentContact.letter_salutationProperty());
         choiceBoxSalutation.valueProperty().bindBidirectional(currentContact.salutationProperty());
@@ -103,6 +103,11 @@ public class FXMLController implements Initializable {
                                                                 .selectedIndexProperty()
                                                                 .isNotEqualTo(0)
                                                 )
+                                ).and(
+                                        choiceBoxLetterSalutation
+                                                .getSelectionModel()
+                                                .selectedIndexProperty()
+                                                .isNotEqualTo(0)
                                 )
                                 .not()
                 );
