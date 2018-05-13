@@ -1,3 +1,24 @@
 .button {
     -fx-font-weight: bold;
 }
+.jfx-snackbar-content:success {/*hintergrund*/
+    -fx-background-color: #00ac00;
+}
+
+.jfx-snackbar-content:failure {/*hintergrund*/
+    -fx-background-color: #ac0000;
+}
+
+.jfx-snackbar-toast {/*Label*/
+    -fx-text-fill: white;
+}
+.jfx-button {
+    -fx-background-color: #dddddd;
+}
+.jfx-text-field {
+    -fx-prompt-text-fill: #777777;
+    
+}
+.jfx-combo-box > .list-cell {
+    -fx-padding: 5 0 5 0;
+}

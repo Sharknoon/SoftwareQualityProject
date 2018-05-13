@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="AnchorPane" prefHeight="303.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamcoffee.softwarequalityproject.FXMLController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="303.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamcoffee.softwarequalityproject.FXMLController">
    <children>
       <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -31,23 +31,30 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="buttonParse" defaultButton="true" mnemonicParsing="false" onAction="#onButtonParseClicked" text="Zuordnen" GridPane.columnIndex="2" />
-            <TextField fx:id="textFieldInput" promptText="Bitte Kontakt eingeben" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" />
             <Label text="Anrede" GridPane.rowIndex="2" />
             <Label text="Briefanrede" GridPane.rowIndex="3" />
             <Label text="Titel" GridPane.rowIndex="4" />
             <Label text="Geschlecht" GridPane.rowIndex="5" />
             <Label text="Vorname" GridPane.rowIndex="6" />
             <Label text="Nachname" GridPane.rowIndex="7" />
-            <TextField fx:id="textFieldTitle" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
-            <ChoiceBox fx:id="choiceBoxSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="choiceBoxGender" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="textFieldLetterSalutation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonContactsClicked" text="Kontakte" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
             <TextFlow fx:id="textFlowError" minHeight="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXButton maxWidth="1.7976931348623157E308" onAction="#onButtonContactsClicked" text="Kontakte" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+            <JFXButton fx:id="buttonSave" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="159.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+            <JFXButton fx:id="buttonParse" defaultButton="true" onAction="#onButtonParseClicked" text="Zuordnen" GridPane.columnIndex="2" />
+            <JFXTextField fx:id="textFieldInput" focusColor="#2196f3" promptText="Bitte Kontakt eingeben" GridPane.columnSpan="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="textFieldLetterSalutation" focusColor="#2196f3" promptText="Bitte Briefanrede eingeben" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="textFieldTitle" focusColor="#2196f3" promptText="Bitte Titel eingeben" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXTextField>
+            <JFXTextField fx:id="textFieldFirstName" focusColor="#2196f3" promptText="Bitte Vorname eingeben" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <JFXTextField fx:id="textFieldLastName" focusColor="#2196f3" promptText="Bitte Nachname eingeben" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <JFXComboBox fx:id="choiceBoxSalutation" focusColor="#2196f3" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXComboBox fx:id="choiceBoxGender" focusColor="#2196f3" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

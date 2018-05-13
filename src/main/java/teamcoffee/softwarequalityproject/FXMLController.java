@@ -1,5 +1,10 @@
 package teamcoffee.softwarequalityproject;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,6 +23,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -33,30 +39,33 @@ import teamcoffee.softwarequalityproject.logic.Parser;
 public class FXMLController implements Initializable {
 
     @FXML
-    private TextField textFieldInput;
+    private AnchorPane root;
 
     @FXML
-    private Button buttonParse;
+    private JFXTextField textFieldInput;
+
+    @FXML
+    private JFXButton buttonParse;
 
     @FXML
     private TextFlow textFlowError;
 
     @FXML
-    private Button buttonSave;
+    private JFXButton buttonSave;
 
     @FXML
-    private ChoiceBox<Salutations> choiceBoxSalutation;
+    private JFXComboBox<Salutations> choiceBoxSalutation;
 
     @FXML
-    private TextField textFieldLetterSalutation;
+    private JFXTextField textFieldLetterSalutation;
     @FXML
-    private TextField textFieldTitle;
+    private JFXTextField textFieldTitle;
     @FXML
-    private ChoiceBox<Genders> choiceBoxGender;
+    private JFXComboBox<Genders> choiceBoxGender;
     @FXML
-    private TextField textFieldFirstName;
+    private JFXTextField textFieldFirstName;
     @FXML
-    private TextField textFieldLastName;
+    private JFXTextField textFieldLastName;
 
     private Contact currentContact;
     private final BooleanProperty MISSING_LASTNAME = new SimpleBooleanProperty();
@@ -69,15 +78,19 @@ public class FXMLController implements Initializable {
         textFieldInput.clear();
         Result result = Parser.parse(input);
         bindContact(result.getContact());
-
-//        List<String> errors = result.getErrors();
-//        initErrorText(errors.stream().collect(Collectors.joining(", ")));
     }
 
     @FXML
     private void onButtonSaveClicked(ActionEvent event) {
-        DB.saveContact(currentContact);
         reset();
+        boolean success = DB.saveContact(currentContact);
+        JFXSnackbar bar = new JFXSnackbar(root);
+        if (success) {
+            bar.enqueue(new SnackbarEvent("Speichern erfolgreich", "success"));
+        } else {
+            bar.enqueue(new SnackbarEvent("Speichern fehlgeschlagen", "failure"));
+        }
+
     }
 
     @FXML
@@ -183,10 +196,10 @@ public class FXMLController implements Initializable {
         bindContact(new Contact());
     }
 
-    private final Text textMissingFirstnameOrSalutation = new Text("Vorname oder Anrede benötigt ");
-    private final Text textMissingFirstname = new Text("Vorname dringend empfohlen ");
-    private final Text textMissingLastname = new Text("Nachname benötigt ");
-    private final Text textMissingSalutation = new Text("Anrede dringend empfohlen ");
+    private final Text textMissingFirstnameOrSalutation = new Text("Vorname oder Anrede benötigt   ");
+    private final Text textMissingFirstname = new Text("Vorname dringend empfohlen   ");
+    private final Text textMissingLastname = new Text("Nachname benötigt   ");
+    private final Text textMissingSalutation = new Text("Anrede dringend empfohlen   ");
 
     private void initErrorText() {
         textMissingFirstnameOrSalutation.setFill(Color.RED);

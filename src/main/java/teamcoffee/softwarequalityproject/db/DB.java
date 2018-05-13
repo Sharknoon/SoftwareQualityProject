@@ -25,7 +25,7 @@ public class DB {
     private static final Path PATH = Paths.get(System.getProperty("user.home") + "\\Kontaktparser\\");
     private static final String TITLES_FILENAME = "titles.json";
 
-    public static void saveContact(Contact contact) {
+    public static boolean saveContact(Contact contact) {
         String json = GSON.toJson(contact);
         String filename = contact.getFirstname() + "_" + contact.getLastname();
         filename = filename.replace(" ", "_");
@@ -47,9 +47,11 @@ public class DB {
                 titles.getTitles().addAll(Arrays.asList(contact.getTitle().split(" ")));
                 saveTitles(titles);
             }
+            return true;
         } catch (UnsupportedOperationException | SecurityException | IOException ex) {
             System.err.println("Konnte Kontakt nicht schreiben " + ex);
         }
+        return false;
     }
 
     public static Titles getTitles() {
