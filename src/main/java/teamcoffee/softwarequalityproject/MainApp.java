@@ -5,6 +5,7 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -18,6 +19,8 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
         
         stage.setTitle("Kontaktsplitter");
+        Image anotherIcon = new Image("icon.png");
+        stage.getIcons().add(anotherIcon);
         stage.setScene(scene);
         stage.show();
     }
