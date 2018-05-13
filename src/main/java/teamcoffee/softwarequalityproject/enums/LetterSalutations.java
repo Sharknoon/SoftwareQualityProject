@@ -1,5 +1,8 @@
 package teamcoffee.softwarequalityproject.enums;
 
+import java.util.Arrays;
+import teamcoffee.softwarequalityproject.models.Contact;
+
 /**
  *
  * @author Josua Frank
@@ -39,109 +42,37 @@ public enum LetterSalutations {
         return getName();
     }
 
-    public LetterSalutations changeGender(Genders newGender) {
-        if (newGender == null) {
-            return FRAU_HERR;
-        }
-        if (newGender == gender) {
-            return this;
-        }
-        switch (language) {
-            case ENGLISH:
-                switch (newGender) {
-                    case FEMALE:
-                        return MS;
-                    case MALE:
-                        return MR;
-                    case NOT_SPECIFIED:
-                        return NOT_SPECIFIED;
-                    case X:
-                    default:
-                        return MS_MR;
-                }
-            case FRENCH:
-                switch (newGender) {
-                    case FEMALE:
-                        return MADAME;
-                    case MALE:
-                        return MONSIEUR;
-                    case NOT_SPECIFIED:
-                        return NOT_SPECIFIED;
-                    case X:
-                    default:
-                        return MADAME_MONSIEUR;
-                }
-            case GERMAN:
-            case NOT_SPECIFIED://No lanugage, German is default
-                switch (newGender) {
-                    case FEMALE:
-                        return FRAU;
-                    case MALE:
-                        return HERR;
-                    case NOT_SPECIFIED:
-                        return NOT_SPECIFIED;
-                    case X:
-                    default:
-                        return FRAU_HERR;
-                }
-        }
-        return FRAU_HERR;
-    }
-
-    public LetterSalutations changeLanguage(Languages newLanguage) {
-        if (newLanguage == null) {
-            newLanguage = Languages.GERMAN;
-        }
-        if (newLanguage == language) {
-            return this;
-        }
-        switch (newLanguage) {
-            case ENGLISH:
-                switch (gender) {
-                    case FEMALE:
-                        return MS;
-                    case MALE:
-                        return MR;
-                    case NOT_SPECIFIED:
-                        return NOT_SPECIFIED;
-                    case X:
-                        return MS_MR;
-                    default:
-                        return this;
-                }
-            case FRENCH:
-                switch (gender) {
-                    case FEMALE:
-                        return MADAME;
-                    case MALE:
-                        return MONSIEUR;
-                    case NOT_SPECIFIED:
-                        return NOT_SPECIFIED;
-                    case X:
-                        return MADAME_MONSIEUR;
-                    default:
-                        return this;
-                }
-            case NOT_SPECIFIED:
-            case GERMAN:
-                switch (gender) {
-                    case FEMALE:
-                        return FRAU;
-                    case MALE:
-                        return HERR;
-                    case NOT_SPECIFIED:
-                        return NOT_SPECIFIED;
-                    case X:
-                        return FRAU_HERR;
-                    default:
-                        return this;
-                }
-        }
-        return this;
-    }
-
     public Genders getGender() {
         return gender;
+    }
+
+    public static String generateLetterSalutation(Contact contact) {
+        if (contact == null) {
+            return FRAU_HERR.getName();
+        }
+        Languages lang = contact.getSalutation() != null
+                && contact.getSalutation().getLanguage() != Languages.NOT_SPECIFIED
+                ? contact.getSalutation().getLanguage()
+                : Languages.GERMAN;
+        Genders gen = contact.getGender() != null
+                && contact.getGender() != Genders.NOT_SPECIFIED
+                ? contact.getGender()
+                : Genders.X;
+        StringBuilder builder = new StringBuilder();
+        builder
+                .append(Arrays
+                        .asList(values())
+                        .stream()
+                        .filter(ls -> ls.getGender() == gen && ls.getLanguage() == lang)
+                        .map(LetterSalutations::getName)
+                        .findAny()
+                        .orElse(FRAU_HERR.getName())
+                )
+                .append(" ")
+                .append(contact.getTitle() == null || (contact.getTitle() != null && contact.getTitle().isEmpty()) ? "" : contact.getTitle() + " ")
+                .append(contact.getFirstname() == null || (contact.getFirstname() != null && contact.getFirstname().isEmpty()) ? "" : contact.getFirstname() + " ")
+                .append(contact.getLastname() == null || (contact.getLastname() != null && contact.getLastname().isEmpty()) ? "" : contact.getLastname());
+        return builder.toString();
     }
 
 }

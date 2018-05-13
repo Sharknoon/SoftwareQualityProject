@@ -4,7 +4,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import teamcoffee.softwarequalityproject.db.DB;
 import teamcoffee.softwarequalityproject.enums.Genders;
 import teamcoffee.softwarequalityproject.enums.Languages;
@@ -32,7 +37,7 @@ public class FXMLController implements Initializable {
     private Button buttonParse;
 
     @FXML
-    private Label labelError;
+    private TextFlow textFlowError;
 
     @FXML
     private Button buttonSave;
@@ -41,7 +46,7 @@ public class FXMLController implements Initializable {
     private ChoiceBox<Salutations> choiceBoxSalutation;
 
     @FXML
-    private ChoiceBox<LetterSalutations> choiceBoxLetterSalutation;
+    private TextField textFieldLetterSalutation;
     @FXML
     private TextField textFieldTitle;
     @FXML
@@ -52,23 +57,19 @@ public class FXMLController implements Initializable {
     private TextField textFieldLastName;
 
     private Contact currentContact;
+    private final BooleanProperty MISSING_LASTNAME = new SimpleBooleanProperty();
+    private final BooleanProperty MISSING_FIRSTNAME = new SimpleBooleanProperty();
+    private final BooleanProperty MISSING_GENDER = new SimpleBooleanProperty();
 
     @FXML
     private void onButtonParseClicked(ActionEvent event) {
         String input = textFieldInput.getText();
         textFieldInput.clear();
         Result result = Parser.parse(input);
-        currentContact = result.getContact();
-        textFieldTitle.textProperty().bindBidirectional(currentContact.titleProperty());
-        textFieldFirstName.textProperty().bindBidirectional(currentContact.firstnameProperty());
-        textFieldLastName.textProperty().bindBidirectional(currentContact.lastnameProperty());
-
-        choiceBoxGender.valueProperty().bindBidirectional(currentContact.genderProperty());
-        choiceBoxLetterSalutation.valueProperty().bindBidirectional(currentContact.letter_salutationProperty());
-        choiceBoxSalutation.valueProperty().bindBidirectional(currentContact.salutationProperty());
+        bindContact(result.getContact());
 
         List<String> errors = result.getErrors();
-        labelError.setText(errors.stream().collect(Collectors.joining(", ")));
+        setErrorText(errors.stream().collect(Collectors.joining(", ")));
     }
 
     @FXML
@@ -77,14 +78,45 @@ public class FXMLController implements Initializable {
         reset();
     }
 
+    @FXML
+    private void onButtonContactsClicked(ActionEvent event) {
+        DB.openContactFolder();
+    }
+
     private final ObjectProperty<Genders> selectedGender = new SimpleObjectProperty<>(Genders.NOT_SPECIFIED);
     private final ObjectProperty<Languages> selectedLanugage = new SimpleObjectProperty<>(Languages.NOT_SPECIFIED);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        bindContact(new Contact());
         textFieldInput.setOnKeyPressed((event) -> {
             if (event.getCode().equals(KeyCode.TAB)) {
                 buttonParse.fire();
+            }
+        });
+        textFieldInput.textProperty().addListener((textField, oldString, newString) -> {
+            if (newString.length() > 100) {
+                textFieldInput.setText(newString.substring(0, 100));
+            }
+        });
+        textFieldLetterSalutation.textProperty().addListener((textField, oldString, newString) -> {
+            if (newString.length() > 100) {
+                textFieldLetterSalutation.setText(newString.substring(0, 100));
+            }
+        });
+        textFieldTitle.textProperty().addListener((textField, oldString, newString) -> {
+            if (newString.length() > 100) {
+                textFieldTitle.setText(newString.substring(0, 100));
+            }
+        });
+        textFieldFirstName.textProperty().addListener((textField, oldString, newString) -> {
+            if (newString.length() > 100) {
+                textFieldFirstName.setText(newString.substring(0, 100));
+            }
+        });
+        textFieldLastName.textProperty().addListener((textField, oldString, newString) -> {
+            if (newString.length() > 100) {
+                textFieldLastName.setText(newString.substring(0, 100));
             }
         });
         buttonSave
@@ -104,10 +136,9 @@ public class FXMLController implements Initializable {
                                                                 .isNotEqualTo(0)
                                                 )
                                 ).and(
-                                        choiceBoxLetterSalutation
-                                                .getSelectionModel()
-                                                .selectedIndexProperty()
-                                                .isNotEqualTo(0)
+                                        textFieldLetterSalutation
+                                                .textProperty()
+                                                .isNotEmpty()
                                 )
                                 .not()
                 );
@@ -117,25 +148,12 @@ public class FXMLController implements Initializable {
         choiceBoxSalutation.getItems().setAll(Salutations.values());
         choiceBoxSalutation.getSelectionModel().selectFirst();
 
-        choiceBoxLetterSalutation.getItems().setAll(LetterSalutations.values());
-        choiceBoxLetterSalutation.getSelectionModel().selectFirst();
-
         choiceBoxGender.valueProperty().bindBidirectional(selectedGender);
 
         choiceBoxSalutation.getSelectionModel()
                 .selectedItemProperty().addListener((choiceBox, oldSalutation, newSalutation) -> {
-                    System.out.println("new Gender based on salutation (" + newSalutation + "): " + newSalutation.getGender());
                     selectedGender.set(newSalutation.getGender());
-                    System.out.println("  new Language based on salutation (" + newSalutation + "): " + newSalutation.getLanguage());
                     selectedLanugage.set(newSalutation.getLanguage());
-                });
-
-        choiceBoxLetterSalutation.getSelectionModel()
-                .selectedItemProperty().addListener((choiceBox, oldLetterSalutation, newLetterSalutation) -> {
-                    System.out.println("new Gender based on lettersalutation (" + newLetterSalutation + "): " + newLetterSalutation.getGender());
-                    selectedGender.set(newLetterSalutation.getGender());
-                    System.out.println("  new Language based on lettersalutation (" + newLetterSalutation + "): " + newLetterSalutation.getLanguage());
-                    selectedLanugage.set(newLetterSalutation.getLanguage());
                 });
 
         selectedGender.addListener((observable, oldGender, newGender) -> {
@@ -144,10 +162,7 @@ public class FXMLController implements Initializable {
                     sal.changeGender(newGender)
             );
 
-            LetterSalutations letsal = choiceBoxLetterSalutation.getSelectionModel().getSelectedItem();
-            choiceBoxLetterSalutation.getSelectionModel().select(
-                    letsal.changeGender(newGender)
-            );
+            textFieldLetterSalutation.setText(LetterSalutations.generateLetterSalutation(currentContact));
         });
 
         selectedLanugage.addListener((observable, oldLanugage, newLanugage) -> {
@@ -156,10 +171,7 @@ public class FXMLController implements Initializable {
                     sal.changeLanugage(newLanugage)
             );
 
-            LetterSalutations letsal = choiceBoxLetterSalutation.getSelectionModel().getSelectedItem();
-            choiceBoxLetterSalutation.getSelectionModel().select(
-                    letsal.changeLanguage(newLanugage)
-            );
+            textFieldLetterSalutation.setText(LetterSalutations.generateLetterSalutation(currentContact));
         });
     }
 
@@ -169,5 +181,27 @@ public class FXMLController implements Initializable {
         textFieldTitle.clear();
         textFieldFirstName.clear();
         textFieldLastName.clear();
+    }
+
+    private void setErrorText(String text) {
+        Text errorText = new Text(text);
+        errorText.setFill(Color.RED);
+        textFlowError.getChildren().clear();
+        textFlowError.getChildren().addAll(errorText);
+    }
+
+    private void bindContact(Contact contact) {
+        if (contact == null) {
+            currentContact = new Contact();
+        } else {
+            currentContact = contact;
+        }
+        textFieldTitle.textProperty().bindBidirectional(currentContact.titleProperty());
+        textFieldFirstName.textProperty().bindBidirectional(currentContact.firstnameProperty());
+        textFieldLastName.textProperty().bindBidirectional(currentContact.lastnameProperty());
+        textFieldLetterSalutation.textProperty().bindBidirectional(currentContact.letter_salutationProperty());
+
+        choiceBoxGender.valueProperty().bindBidirectional(currentContact.genderProperty());
+        choiceBoxSalutation.valueProperty().bindBidirectional(currentContact.salutationProperty());
     }
 }

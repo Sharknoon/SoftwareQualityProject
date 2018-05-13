@@ -9,19 +9,19 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane id="AnchorPane" prefHeight="303.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamcoffee.softwarequalityproject.FXMLController">
    <children>
       <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints halignment="LEFT" />
+          <ColumnConstraints halignment="LEFT" minWidth="-Infinity" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
-          <ColumnConstraints />
+          <ColumnConstraints minWidth="-Infinity" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />
-          <RowConstraints prefHeight="0.0" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -33,20 +33,21 @@
          <children>
             <Button fx:id="buttonParse" defaultButton="true" mnemonicParsing="false" onAction="#onButtonParseClicked" text="Zuordnen" GridPane.columnIndex="2" />
             <TextField fx:id="textFieldInput" promptText="Bitte Kontakt eingeben" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" />
-            <Label text="Anrede" GridPane.rowIndex="3" />
-            <Label text="Briefanrede" GridPane.rowIndex="4" />
-            <Label text="Titel" GridPane.rowIndex="5" />
-            <Label text="Geschlecht" GridPane.rowIndex="6" />
-            <Label text="Vorname" GridPane.rowIndex="7" />
-            <Label text="Nachname" GridPane.rowIndex="8" />
-            <TextField fx:id="textFieldTitle" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <ChoiceBox fx:id="choiceBoxSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ChoiceBox fx:id="choiceBoxLetterSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <ChoiceBox fx:id="choiceBoxGender" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="labelError" prefHeight="0.0" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+            <Label text="Anrede" GridPane.rowIndex="2" />
+            <Label text="Briefanrede" GridPane.rowIndex="3" />
+            <Label text="Titel" GridPane.rowIndex="4" />
+            <Label text="Geschlecht" GridPane.rowIndex="5" />
+            <Label text="Vorname" GridPane.rowIndex="6" />
+            <Label text="Nachname" GridPane.rowIndex="7" />
+            <TextField fx:id="textFieldTitle" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Button fx:id="buttonSave" disable="true" mnemonicParsing="false" onAction="#onButtonSaveClicked" prefHeight="25.0" prefWidth="143.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+            <ChoiceBox fx:id="choiceBoxSalutation" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="choiceBoxGender" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldLetterSalutation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonContactsClicked" text="Kontakte" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+            <TextFlow fx:id="textFlowError" minHeight="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

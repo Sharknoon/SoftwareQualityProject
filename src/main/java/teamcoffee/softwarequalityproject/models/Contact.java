@@ -16,45 +16,44 @@ public class Contact {
 
     private final StringProperty input = new SimpleStringProperty("");
     private final ObjectProperty<Salutations> salutation = new SimpleObjectProperty<>();
-    private final ObjectProperty<LetterSalutations> letter_salutation = new SimpleObjectProperty<>();
-    private final StringProperty title = new SimpleStringProperty();
+    private final StringProperty letter_salutation = new SimpleStringProperty("");
+    private final StringProperty title = new SimpleStringProperty("");
     private final ObjectProperty<Genders> gender = new SimpleObjectProperty<>();
-    private final StringProperty firstname = new SimpleStringProperty();
-    private final StringProperty lastname = new SimpleStringProperty();
+    private final StringProperty firstname = new SimpleStringProperty("");
+    private final StringProperty lastname = new SimpleStringProperty("");
 
     public Contact() {
+        this(null, null, null, null, null, null);
     }
 
     public Contact(String input, Salutations salutation, String title, Genders gender, String firstname, String lastname) {
-        this.input.set(input);
-        this.salutation.set(salutation);
-        if (salutation != null) {
-            switch (salutation) {
-                case FRAU:
-                    letter_salutation.set(LetterSalutations.FRAU);
-                    break;
-                case HERR:
-                    letter_salutation.set(LetterSalutations.HERR);
-                    break;
-                case MR:
-                    letter_salutation.set(LetterSalutations.MR);
-                    break;
-                case MS:
-                    letter_salutation.set(LetterSalutations.MS);
-                    break;
-                case NOT_SPECIFIED:
-                case X:
-                default:
-                    letter_salutation.set(LetterSalutations.FRAU_HERR);
-                    break;
-            }
-        } else {
-            letter_salutation.set(LetterSalutations.FRAU_HERR);
-        }
-        this.title.set(title);
-        this.gender.set(gender);
-        this.firstname.set(firstname);
-        this.lastname.set(lastname);
+        this.input.set(input == null ? "" : input);
+        this.salutation.set(salutation == null ? Salutations.NOT_SPECIFIED : salutation);
+        this.title.set(title == null ? "" : title);
+        this.gender.set(gender == null ? Genders.NOT_SPECIFIED : gender);
+        this.firstname.set(firstname == null ? "" : firstname);
+        this.lastname.set(lastname == null ? "" : lastname);
+        this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
+
+        bindLetterSalutationGenerator();
+    }
+
+    private void bindLetterSalutationGenerator() {
+        this.salutation.addListener((observable, oldValue, newValue) -> {
+            this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
+        });
+        this.title.addListener((observable, oldValue, newValue) -> {
+            this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
+        });
+        this.gender.addListener((observable, oldValue, newValue) -> {
+            this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
+        });
+        this.firstname.addListener((observable, oldValue, newValue) -> {
+            this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
+        });
+        this.lastname.addListener((observable, oldValue, newValue) -> {
+            this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
+        });
     }
 
     public Salutations getSalutation() {
@@ -65,11 +64,11 @@ public class Contact {
         return salutation;
     }
 
-    public LetterSalutations getLetter_salutation() {
+    public String getLetter_salutation() {
         return letter_salutation.get();
     }
 
-    public ObjectProperty<LetterSalutations> letter_salutationProperty() {
+    public StringProperty letter_salutationProperty() {
         return letter_salutation;
     }
 

@@ -1,6 +1,9 @@
 package teamcoffee.softwarequalityproject.db;
 
 import com.google.gson.Gson;
+import java.awt.Desktop;
+import java.awt.HeadlessException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -75,6 +78,19 @@ public class DB {
             Files.write(filePath, json.getBytes(StandardCharsets.UTF_8));
         } catch (UnsupportedOperationException | SecurityException | IOException e) {
             System.err.println("Konnte Titel nicht schreiben " + e);
+        }
+    }
+
+    public static void openContactFolder() {
+        try {
+            if (Files.notExists(PATH)) {
+                Files.createDirectories(PATH);
+            }
+            File file = PATH.toFile();
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (UnsupportedOperationException | IOException | SecurityException | IllegalArgumentException | NullPointerException e) {
+            System.err.println("Konnte Order " + PATH + " nicht öffnen.");
         }
     }
 
