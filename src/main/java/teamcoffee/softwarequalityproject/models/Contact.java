@@ -14,13 +14,13 @@ import teamcoffee.softwarequalityproject.enums.Salutations;
  */
 public class Contact {
 
-    private final StringProperty input = new SimpleStringProperty("");
+    private final StringProperty input = new SimpleStringProperty();
     private final ObjectProperty<Salutations> salutation = new SimpleObjectProperty<>();
-    private final StringProperty letter_salutation = new SimpleStringProperty("");
-    private final StringProperty title = new SimpleStringProperty("");
+    private final StringProperty letter_salutation = new SimpleStringProperty();
+    private final StringProperty title = new SimpleStringProperty();
     private final ObjectProperty<Genders> gender = new SimpleObjectProperty<>();
-    private final StringProperty firstname = new SimpleStringProperty("");
-    private final StringProperty lastname = new SimpleStringProperty("");
+    private final StringProperty firstname = new SimpleStringProperty();
+    private final StringProperty lastname = new SimpleStringProperty();
 
     public Contact() {
         this(null, null, null, null, null, null);

@@ -8,6 +8,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,7 +61,7 @@ public class FXMLController implements Initializable {
     private Contact currentContact;
     private final BooleanProperty MISSING_LASTNAME = new SimpleBooleanProperty();
     private final BooleanProperty MISSING_FIRSTNAME = new SimpleBooleanProperty();
-    private final BooleanProperty MISSING_GENDER = new SimpleBooleanProperty();
+    private final BooleanProperty MISSING_SALUTATION = new SimpleBooleanProperty();
 
     @FXML
     private void onButtonParseClicked(ActionEvent event) {
@@ -68,8 +70,8 @@ public class FXMLController implements Initializable {
         Result result = Parser.parse(input);
         bindContact(result.getContact());
 
-        List<String> errors = result.getErrors();
-        setErrorText(errors.stream().collect(Collectors.joining(", ")));
+//        List<String> errors = result.getErrors();
+//        initErrorText(errors.stream().collect(Collectors.joining(", ")));
     }
 
     @FXML
@@ -88,7 +90,7 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bindContact(new Contact());
+        reset();
         textFieldInput.setOnKeyPressed((event) -> {
             if (event.getCode().equals(KeyCode.TAB)) {
                 buttonParse.fire();
@@ -173,21 +175,61 @@ public class FXMLController implements Initializable {
 
             textFieldLetterSalutation.setText(LetterSalutations.generateLetterSalutation(currentContact));
         });
+
+        initErrorText();
     }
 
     private void reset() {
-        textFieldInput.clear();
-        choiceBoxSalutation.getSelectionModel().select(Salutations.NOT_SPECIFIED);
-        textFieldTitle.clear();
-        textFieldFirstName.clear();
-        textFieldLastName.clear();
+        bindContact(new Contact());
     }
 
-    private void setErrorText(String text) {
-        Text errorText = new Text(text);
-        errorText.setFill(Color.RED);
-        textFlowError.getChildren().clear();
-        textFlowError.getChildren().addAll(errorText);
+    private final Text textMissingFirstnameOrSalutation = new Text("Vorname oder Anrede benötigt ");
+    private final Text textMissingFirstname = new Text("Vorname dringend empfohlen ");
+    private final Text textMissingLastname = new Text("Nachname benötigt ");
+    private final Text textMissingSalutation = new Text("Anrede dringend empfohlen ");
+
+    private void initErrorText() {
+        textMissingFirstnameOrSalutation.setFill(Color.RED);
+        textMissingFirstname.setFill(Color.ORANGE);
+        textMissingLastname.setFill(Color.RED);
+        textMissingSalutation.setFill(Color.ORANGE);
+        ObservableList<Text> errorTexts = FXCollections.observableArrayList();
+        errorTexts.addAll(textMissingFirstnameOrSalutation, textMissingLastname, textMissingSalutation, textMissingFirstname);
+        setErrorTexts(errorTexts);
+        MISSING_FIRSTNAME.addListener((observable, oldValue, newValue) -> {
+            setErrorTexts(errorTexts);
+        });
+        MISSING_LASTNAME.addListener((observable, oldValue, newValue) -> {
+            setErrorTexts(errorTexts);
+        });
+        MISSING_SALUTATION.addListener((observable, oldValue, newValue) -> {
+            setErrorTexts(errorTexts);
+        });
+    }
+
+    private void setErrorTexts(ObservableList<Text> list) {
+        textFlowError.getChildren().setAll(list
+                .filtered(t -> {
+                    if (t == textMissingFirstnameOrSalutation) {
+                        return MISSING_FIRSTNAME.get() && MISSING_SALUTATION.get();
+                    }
+                    if (t == textMissingFirstname) {
+                        if (MISSING_SALUTATION.get() && MISSING_FIRSTNAME.get()) {
+                            return false;//uses missing firstnameorsalutation
+                        }
+                        return MISSING_FIRSTNAME.get();
+                    }
+                    if (t == textMissingLastname) {
+                        return MISSING_LASTNAME.get();
+                    }
+                    if (t == textMissingSalutation) {
+                        if (MISSING_SALUTATION.get() && MISSING_FIRSTNAME.get()) {
+                            return false;//uses missing firstnameorsalutation
+                        }
+                        return MISSING_SALUTATION.get();
+                    }
+                    return true;
+                }));
     }
 
     private void bindContact(Contact contact) {
@@ -203,5 +245,9 @@ public class FXMLController implements Initializable {
 
         choiceBoxGender.valueProperty().bindBidirectional(currentContact.genderProperty());
         choiceBoxSalutation.valueProperty().bindBidirectional(currentContact.salutationProperty());
+
+        MISSING_FIRSTNAME.bind(currentContact.firstnameProperty().isEmpty());
+        MISSING_LASTNAME.bind(currentContact.lastnameProperty().isEmpty());
+        MISSING_SALUTATION.bind(currentContact.salutationProperty().isEqualTo(Salutations.NOT_SPECIFIED));
     }
 }
