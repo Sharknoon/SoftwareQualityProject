@@ -82,15 +82,14 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void onButtonSaveClicked(ActionEvent event) {
-        reset();
         boolean success = DB.saveContact(currentContact);
+        reset();
         JFXSnackbar bar = new JFXSnackbar(root);
         if (success) {
             bar.enqueue(new SnackbarEvent("Speichern erfolgreich", "success"));
         } else {
             bar.enqueue(new SnackbarEvent("Speichern fehlgeschlagen", "failure"));
         }
-
     }
 
     @FXML
