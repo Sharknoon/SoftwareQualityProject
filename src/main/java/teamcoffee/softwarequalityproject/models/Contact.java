@@ -1,5 +1,6 @@
 package teamcoffee.softwarequalityproject.models;
 
+import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,8 +41,8 @@ public class Contact {
     }
 
     /**
-     * Setzt die Briefanrede bei Änderung der Anrede, des Titels, des Geschlechts,
-     * des Vornamens oder des Nachnamens neu
+     * Setzt die Briefanrede bei Änderung der Anrede, des Titels, des
+     * Geschlechts, des Vornamens oder des Nachnamens neu
      */
     private void bindLetterSalutationGenerator() {
         this.salutation.addListener((observable, oldValue, newValue) -> {
@@ -63,6 +64,7 @@ public class Contact {
 
     /**
      * Gibt die Anrede zurück
+     *
      * @return Die Anrede
      */
     public Salutations getSalutation() {
@@ -75,6 +77,7 @@ public class Contact {
 
     /**
      * Gibt die Briefanrede zurück
+     *
      * @return Die Briefanrede
      */
     public String getLetter_salutation() {
@@ -87,6 +90,7 @@ public class Contact {
 
     /**
      * Gibt die Titel zurück
+     *
      * @return Die Titel
      */
     public String getTitle() {
@@ -99,6 +103,7 @@ public class Contact {
 
     /**
      * Gibt das Geschlecht zurück
+     *
      * @return Das Geschlecht
      */
     public Genders getGender() {
@@ -111,6 +116,7 @@ public class Contact {
 
     /**
      * Gibt den Vornamen zurück
+     *
      * @return Den Vornamen
      */
     public String getFirstname() {
@@ -123,6 +129,7 @@ public class Contact {
 
     /**
      * Gibt den Nachnamen zurück
+     *
      * @return Den Nachnamen
      */
     public String getLastname() {
@@ -131,6 +138,57 @@ public class Contact {
 
     public StringProperty lastnameProperty() {
         return lastname;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" + "input=" + input.get() + ", salutation=" + salutation.get() + ", letter_salutation=" + letter_salutation.get() + ", title=" + title.get() + ", gender=" + gender.get() + ", firstname=" + firstname.get() + ", lastname=" + lastname.get() + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.input);
+        hash = 41 * hash + Objects.hashCode(this.salutation);
+        hash = 41 * hash + Objects.hashCode(this.letter_salutation);
+        hash = 41 * hash + Objects.hashCode(this.title);
+        hash = 41 * hash + Objects.hashCode(this.gender);
+        hash = 41 * hash + Objects.hashCode(this.firstname);
+        hash = 41 * hash + Objects.hashCode(this.lastname);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contact other = (Contact) obj;
+        if (!this.input.get().equals(other.input.get())) {
+            return false;
+        }
+        if (!this.salutation.get().equals(other.salutation.get())) {
+            return false;
+        }
+        if (!this.letter_salutation.get().equals(other.letter_salutation.get())) {
+            return false;
+        }
+        if (!this.title.get().equals(other.title.get())) {
+            return false;
+        }
+        if (!this.gender.get().equals(other.gender.get())) {
+            return false;
+        }
+        if (!this.firstname.get().equals(other.firstname.get())) {
+            return false;
+        }
+        return this.lastname.get().equals(other.lastname.get());
     }
 
 }

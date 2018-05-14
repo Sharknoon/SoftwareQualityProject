@@ -8,12 +8,14 @@ import teamcoffee.softwarequalityproject.models.Contact;
 
 /**
  * Der Parser parst die Eingabe zu einem Ergebnis
+ *
  * @author Josua Frank
  */
 public class Parser {
 
     /**
      * Parst einen Eingabestring zu einem Kontakt
+     *
      * @param parse Der Eingabestring
      * @return Der geparste Kontakt
      */
@@ -46,6 +48,18 @@ public class Parser {
             } else // Nachname erkannt anhand von Komma
             if (splitPart.charAt(splitPart.length() - 1) == ',') {
                 lastName = splitPart.substring(0, splitPart.length() - 1);
+                if (zaehler + 1 < split.length) {
+                    if (firstName.isEmpty()) {
+                        firstName = split[zaehler + 1];
+                    } else {
+                        firstName = firstName + " " + split[zaehler + 1];
+                    }
+                    zaehler++;
+                }
+            } else//Spanischer Nachname
+            if (splitPart.toLowerCase().equals("y") && zaehler + 1 < split.length && !firstName.isEmpty()) {
+                lastName = firstName + " " + splitPart;
+                firstName = "";
             } else {//Vorname noch nicht gefunden
                 if (firstName.isEmpty() && zaehler < split.length - 1) {
                     firstName = splitPart;
