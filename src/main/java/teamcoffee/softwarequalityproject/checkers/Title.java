@@ -11,9 +11,9 @@ public class Title {
     private static String title;
     
     /**
-     * Überprüfung des String auf einen möglichen Titel (Dok., usw.)
+     * Überprüfung des String auf einen möglichen Titel (Dr., usw.)
      * @param string Der mögliche Titel
-     * @return true, if this is a title, false otherwise
+     * @return wahr, wenn dies ein Titel ist, ansonsten falsch
      */
     public static boolean isTitle(String string) {
         title = string.trim().toLowerCase();
@@ -21,7 +21,7 @@ public class Title {
                 .getTitles()
                 .getTitles()
                 .stream()
-                .anyMatch(s -> s.toLowerCase().contains(title));
+                .anyMatch(s -> title.contains(s.toLowerCase()));
     }
 
 }

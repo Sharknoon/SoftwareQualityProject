@@ -1,5 +1,8 @@
 package teamcoffee.softwarequalityproject.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+import teamcoffee.softwarequalityproject.checkers.NobilityTitle;
 import teamcoffee.softwarequalityproject.checkers.Salutation;
 import teamcoffee.softwarequalityproject.checkers.Title;
 import teamcoffee.softwarequalityproject.enums.Genders;
@@ -29,12 +32,16 @@ public class Parser {
         String firstName = "";
         String lastName = "";
         Genders gender = Genders.NOT_SPECIFIED;
+        List<String> nobilityTitles = new ArrayList<>();
 
         while (zaehler != split.length) {
 
             String splitPart = split[zaehler];
 
-            // Überprüfung auf Anrede
+            // Überprüfung auf Adelstitel
+            if (NobilityTitle.isNobilityTitle(splitPart)) {
+                nobilityTitles.add(splitPart);
+            } else // Überprüfung auf Anrede
             if (Salutation.isSalutation(splitPart) == true) {
                 salutation = Salutation.getSalutation(splitPart);
                 gender = Salutation.getGender(splitPart);
@@ -109,7 +116,7 @@ public class Parser {
             }
 
         }
-        return new Contact(parse, salutation, title, gender, firstName, lastName);
+        return new Contact(parse, salutation, title, gender, firstName, lastName, nobilityTitles);
     }
 
 }

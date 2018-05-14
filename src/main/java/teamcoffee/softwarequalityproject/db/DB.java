@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import org.hildan.fxgson.FxGson;
 import teamcoffee.softwarequalityproject.checkers.Title;
+import teamcoffee.softwarequalityproject.enums.NobilityTitles;
 import teamcoffee.softwarequalityproject.enums.Titles;
 import teamcoffee.softwarequalityproject.models.Contact;
 
@@ -24,9 +25,11 @@ public class DB {
     private static final Gson GSON = FxGson.fullBuilder().setPrettyPrinting().create();
     private static final Path PATH = Paths.get(System.getProperty("user.home") + "\\Kontaktparser\\");
     private static final String TITLES_FILENAME = "titles.json";
+    private static final String NOBILITY_TITLES_FILENAME = "nobility_titles.json";
 
     /**
      * Speichert einen Kontakt mit dem dateinamen vorname_nachname.json
+     *
      * @param contact Der zu speicherne Kontakt
      * @return true wenn er erfolgreich gespeichert wurde, ansonsten false
      */
@@ -61,6 +64,7 @@ public class DB {
 
     /**
      * Gibt ein Titles objekt mit allen gepeicherten Titeln zurück
+     *
      * @return Das Titles objekt mit allen Titeln
      */
     public static Titles getTitles() {
@@ -80,7 +84,29 @@ public class DB {
     }
 
     /**
+     * Gibt ein NobilityTitles objekt mit allen gepeicherten Adelstiteln zurück
+     *
+     * @return Das NobilityTitles objekt mit allen Adelstiteln
+     */
+    public static NobilityTitles getNobilityTitles() {
+        try {
+            if (Files.notExists(PATH)) {
+                Files.createDirectories(PATH);
+            }
+            Path filePath = PATH.resolve(NOBILITY_TITLES_FILENAME);
+            if (Files.notExists(filePath)) {
+                saveNobilityTitles(new NobilityTitles());
+            }
+            return GSON.fromJson(Files.newBufferedReader(filePath, StandardCharsets.UTF_8), NobilityTitles.class);
+        } catch (UnsupportedOperationException | SecurityException | IOException e) {
+            System.err.println("Konnte Titel nicht lesen " + e);
+        }
+        return new NobilityTitles();
+    }
+
+    /**
      * Speichert die Titel
+     *
      * @param titles Die zu speichernden Titel
      * @return true wenn das Speichern erfolgreich war, ansonsten false
      */
@@ -95,6 +121,27 @@ public class DB {
             return true;
         } catch (UnsupportedOperationException | SecurityException | IOException e) {
             System.err.println("Konnte Titel nicht schreiben " + e);
+        }
+        return false;
+    }
+
+    /**
+     * Speichert die Titel
+     *
+     * @param nobilityTitles Die zu speichernden Adelstitel
+     * @return true wenn das Speichern erfolgreich war, ansonsten false
+     */
+    public static boolean saveNobilityTitles(NobilityTitles nobilityTitles) {
+        try {
+            if (Files.notExists(PATH)) {
+                Files.createDirectories(PATH);
+            }
+            Path filePath = PATH.resolve(NOBILITY_TITLES_FILENAME);
+            String json = GSON.toJson(nobilityTitles);
+            Files.write(filePath, json.getBytes(StandardCharsets.UTF_8));
+            return true;
+        } catch (UnsupportedOperationException | SecurityException | IOException e) {
+            System.err.println("Konnte Adelstitel nicht schreiben " + e);
         }
         return false;
     }

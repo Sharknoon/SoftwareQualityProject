@@ -1,10 +1,16 @@
 package teamcoffee.softwarequalityproject.models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import teamcoffee.softwarequalityproject.enums.Genders;
 import teamcoffee.softwarequalityproject.enums.LetterSalutations;
 import teamcoffee.softwarequalityproject.enums.Salutations;
@@ -23,18 +29,20 @@ public class Contact {
     private final ObjectProperty<Genders> gender = new SimpleObjectProperty<>();
     private final StringProperty firstname = new SimpleStringProperty();
     private final StringProperty lastname = new SimpleStringProperty();
+    private final transient List<String> nobilityTitles = new ArrayList<>();
 
     public Contact() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null);
     }
 
-    public Contact(String input, Salutations salutation, String title, Genders gender, String firstname, String lastname) {
+    public Contact(String input, Salutations salutation, String title, Genders gender, String firstname, String lastname, List<String> nobilityTitles) {
         this.input.set(input == null ? "" : input);
         this.salutation.set(salutation == null ? Salutations.NOT_SPECIFIED : salutation);
         this.title.set(title == null ? "" : title);
         this.gender.set(gender == null ? Genders.NOT_SPECIFIED : gender);
         this.firstname.set(firstname == null ? "" : firstname);
         this.lastname.set(lastname == null ? "" : lastname);
+        this.nobilityTitles.addAll(nobilityTitles == null ? List.of() : nobilityTitles);
         this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
 
         bindLetterSalutationGenerator();
@@ -140,9 +148,21 @@ public class Contact {
         return lastname;
     }
 
+    /**
+     * Gibt die Liste der Adelstitel zurück
+     * @return 
+     */
+    public List<String> getNobilityTitles() {
+        return nobilityTitles;
+    }
+    
+//    public ListProperty<String> nobilityTitlesProperty(){
+//        return nobilityTitles;
+//    }
+
     @Override
     public String toString() {
-        return "Contact{" + "input=" + input.get() + ", salutation=" + salutation.get() + ", letter_salutation=" + letter_salutation.get() + ", title=" + title.get() + ", gender=" + gender.get() + ", firstname=" + firstname.get() + ", lastname=" + lastname.get() + '}';
+        return "Contact{" + "input=" + input.get() + ", salutation=" + salutation.get() + ", letter_salutation=" + letter_salutation.get() + ", title=" + title.get() + ", gender=" + gender.get() + ", firstname=" + firstname.get() + ", lastname=" + lastname.get() + ", nobilityTitles=" + nobilityTitles + '}';
     }
 
     @Override
@@ -155,6 +175,7 @@ public class Contact {
         hash = 41 * hash + Objects.hashCode(this.gender);
         hash = 41 * hash + Objects.hashCode(this.firstname);
         hash = 41 * hash + Objects.hashCode(this.lastname);
+        hash = 41 * hash + Objects.hashCode(this.nobilityTitles);
         return hash;
     }
 
@@ -188,7 +209,10 @@ public class Contact {
         if (!this.firstname.get().equals(other.firstname.get())) {
             return false;
         }
-        return this.lastname.get().equals(other.lastname.get());
+        if (!this.lastname.get().equals(other.lastname.get())) {
+            return false;
+        }
+        return this.nobilityTitles.equals(other.nobilityTitles);
     }
 
 }

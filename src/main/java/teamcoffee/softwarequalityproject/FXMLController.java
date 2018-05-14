@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -341,5 +342,16 @@ public class FXMLController implements Initializable {
         MISSING_FIRSTNAME.bind(currentContact.firstnameProperty().isEmpty());
         MISSING_LASTNAME.bind(currentContact.lastnameProperty().isEmpty());
         MISSING_SALUTATION.bind(currentContact.salutationProperty().isEqualTo(Salutations.NOT_SPECIFIED));
+
+        if (!currentContact.getNobilityTitles().isEmpty()) {
+            JFXSnackbar bar = new JFXSnackbar(root);
+            String message;
+            if (currentContact.getNobilityTitles().size() > 1) {
+                message = "Die Adelstitel " + currentContact.getNobilityTitles().stream().collect(Collectors.joining(", ")) + " wurden ignoriert";
+            } else {
+                message = "Der Adelstitel " + currentContact.getNobilityTitles().get(0) + " wurde ignoriert";
+            }
+            bar.enqueue(new SnackbarEvent(message, "failure"));
+        }
     }
 }
