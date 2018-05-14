@@ -82,8 +82,9 @@ public class DB {
     /**
      * Speichert die Titel
      * @param titles Die zu speichernden Titel
+     * @return true wenn das Speichern erfolgreich war, ansonsten false
      */
-    public static void saveTitles(Titles titles) {
+    public static boolean saveTitles(Titles titles) {
         try {
             if (Files.notExists(PATH)) {
                 Files.createDirectories(PATH);
@@ -91,9 +92,11 @@ public class DB {
             Path filePath = PATH.resolve(TITLES_FILENAME);
             String json = GSON.toJson(titles);
             Files.write(filePath, json.getBytes(StandardCharsets.UTF_8));
+            return true;
         } catch (UnsupportedOperationException | SecurityException | IOException e) {
             System.err.println("Konnte Titel nicht schreiben " + e);
         }
+        return false;
     }
 
     /**

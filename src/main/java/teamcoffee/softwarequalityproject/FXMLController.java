@@ -18,11 +18,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import teamcoffee.softwarequalityproject.db.DB;
 import teamcoffee.softwarequalityproject.enums.Genders;
 import teamcoffee.softwarequalityproject.enums.Languages;
@@ -121,6 +123,9 @@ public class FXMLController implements Initializable {
     @FXML
     private void onButtonAddTitleClicked(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog();
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        Image icon = new Image("icon.png");
+        stage.getIcons().add(icon);
         dialog.setTitle("Neuer Titel");
         dialog.setHeaderText("Neuen Titel hinzufügen");
         dialog.setContentText("Bitte geben Sie den Titel ein:");
@@ -129,7 +134,13 @@ public class FXMLController implements Initializable {
         result.ifPresent(name -> {
             Titles titles = DB.getTitles();
             titles.getTitles().add(name);
-            DB.saveTitles(titles);
+            boolean success = DB.saveTitles(titles);
+            JFXSnackbar bar = new JFXSnackbar(root);
+            if (success) {
+                bar.enqueue(new SnackbarEvent("Titel \"" + name + "\" hinzugefügt", "success"));
+            } else {
+                bar.enqueue(new SnackbarEvent("Titel \"" + name + "\" hinzufügen fehlgeschlagen!", "failure"));
+            }
         });
     }
 
@@ -280,6 +291,7 @@ public class FXMLController implements Initializable {
 
     /**
      * Prüft, ob und welche Fehler angezeigt werden müssen
+     *
      * @param list Die Liste mit allen Fehlern
      */
     private void setErrorTexts(ObservableList<Text> list) {
@@ -309,6 +321,7 @@ public class FXMLController implements Initializable {
 
     /**
      * Bindet Die Oberfläche an das Kontalt-bean
+     *
      * @param contact Der Kontakt
      */
     private void bindContact(Contact contact) {

@@ -29,8 +29,8 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
 
         stage.setTitle("Kontaktsplitter");
-        Image anotherIcon = new Image("icon.png");
-        stage.getIcons().add(anotherIcon);
+        Image icon = new Image("icon.png");
+        stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
     }
