@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Die Klasse in der die Titel gespeichert werden
+ * 
  * Eine Klasse statt ein enum, damit es dynamisch erweitert werden kann
  * (Lernfunktion)
  *
@@ -18,7 +20,6 @@ public class Titles {
 
     private final Set<String> titles = new HashSet<>();
     
-    // Verwaltung der einzelnen Titel
     public Titles() {
         //Vorgelernte Ausdruecke
         titles.add("Dr.");
@@ -33,6 +34,10 @@ public class Titles {
         titles.add("mult.");
     }
 
+    /**
+     * Gibt die gespeicherten Titel zurück
+     * @return Die gespeicherten Titel
+     */
     public Set<String> getTitles() {
         return titles;
     }

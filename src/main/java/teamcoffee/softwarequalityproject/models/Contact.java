@@ -9,6 +9,7 @@ import teamcoffee.softwarequalityproject.enums.LetterSalutations;
 import teamcoffee.softwarequalityproject.enums.Salutations;
 
 /**
+ * Das bean zur Speicherung der Kontaktdaten
  *
  * @author Josua Frank
  */
@@ -38,6 +39,10 @@ public class Contact {
         bindLetterSalutationGenerator();
     }
 
+    /**
+     * Setzt die Briefanrede bei Änderung der Anrede, des Titels, des Geschlechts,
+     * des Vornamens oder des Nachnamens neu
+     */
     private void bindLetterSalutationGenerator() {
         this.salutation.addListener((observable, oldValue, newValue) -> {
             this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
@@ -56,6 +61,10 @@ public class Contact {
         });
     }
 
+    /**
+     * Gibt die Anrede zurück
+     * @return Die Anrede
+     */
     public Salutations getSalutation() {
         return salutation.get();
     }
@@ -64,6 +73,10 @@ public class Contact {
         return salutation;
     }
 
+    /**
+     * Gibt die Briefanrede zurück
+     * @return Die Briefanrede
+     */
     public String getLetter_salutation() {
         return letter_salutation.get();
     }
@@ -72,6 +85,10 @@ public class Contact {
         return letter_salutation;
     }
 
+    /**
+     * Gibt die Titel zurück
+     * @return Die Titel
+     */
     public String getTitle() {
         return title.get();
     }
@@ -80,6 +97,10 @@ public class Contact {
         return title;
     }
 
+    /**
+     * Gibt das Geschlecht zurück
+     * @return Das Geschlecht
+     */
     public Genders getGender() {
         return gender.get();
     }
@@ -88,6 +109,10 @@ public class Contact {
         return gender;
     }
 
+    /**
+     * Gibt den Vornamen zurück
+     * @return Den Vornamen
+     */
     public String getFirstname() {
         return firstname.get();
     }
@@ -96,6 +121,10 @@ public class Contact {
         return firstname;
     }
 
+    /**
+     * Gibt den Nachnamen zurück
+     * @return Den Nachnamen
+     */
     public String getLastname() {
         return lastname.get();
     }

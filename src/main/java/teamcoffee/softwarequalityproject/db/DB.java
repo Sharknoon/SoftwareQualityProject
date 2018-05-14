@@ -2,7 +2,6 @@ package teamcoffee.softwarequalityproject.db;
 
 import com.google.gson.Gson;
 import java.awt.Desktop;
-import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +15,7 @@ import teamcoffee.softwarequalityproject.enums.Titles;
 import teamcoffee.softwarequalityproject.models.Contact;
 
 /**
+ * Diese Klasse verwaltet die Persistenz von Dateien
  *
  * @author Josua Frank
  */
@@ -25,6 +25,11 @@ public class DB {
     private static final Path PATH = Paths.get(System.getProperty("user.home") + "\\Kontaktparser\\");
     private static final String TITLES_FILENAME = "titles.json";
 
+    /**
+     * Speichert einen Kontakt mit dem dateinamen vorname_nachname.json
+     * @param contact Der zu speicherne Kontakt
+     * @return true wenn er erfolgreich gespeichert wurde, ansonsten false
+     */
     public static boolean saveContact(Contact contact) {
         String json = GSON.toJson(contact);
         String filename = contact.getFirstname() + "_" + contact.getLastname();
@@ -54,6 +59,10 @@ public class DB {
         return false;
     }
 
+    /**
+     * Gibt ein Titles objekt mit allen gepeicherten Titeln zurück
+     * @return Das Titles objekt mit allen Titeln
+     */
     public static Titles getTitles() {
         try {
             if (Files.notExists(PATH)) {
@@ -70,6 +79,10 @@ public class DB {
         return new Titles();
     }
 
+    /**
+     * Speichert die Titel
+     * @param titles Die zu speichernden Titel
+     */
     public static void saveTitles(Titles titles) {
         try {
             if (Files.notExists(PATH)) {
@@ -83,6 +96,9 @@ public class DB {
         }
     }
 
+    /**
+     * Öffnet den Ordner, in dem die Kontakte gespeichert sind
+     */
     public static void openContactFolder() {
         try {
             if (Files.notExists(PATH)) {

@@ -6,10 +6,10 @@
 package teamcoffee.softwarequalityproject.enums;
 
 /**
+ * Verwaltet die Sprachen von Anreden
  *
  * @author frank
  */
-// Zur Verwaltung des Programmsprachen
 public enum Languages {
     NOT_SPECIFIED,
     GERMAN,

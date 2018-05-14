@@ -5,15 +5,19 @@ import teamcoffee.softwarequalityproject.checkers.Title;
 import teamcoffee.softwarequalityproject.enums.Genders;
 import teamcoffee.softwarequalityproject.enums.Salutations;
 import teamcoffee.softwarequalityproject.models.Contact;
-import teamcoffee.softwarequalityproject.models.Result;
 
 /**
- *
+ * Der Parser parst die Eingabe zu einem Ergebnis
  * @author Josua Frank
  */
 public class Parser {
 
-    public static Result parse(String parse) {
+    /**
+     * Parst einen Eingabestring zu einem Kontakt
+     * @param parse Der Eingabestring
+     * @return Der geparste Kontakt
+     */
+    public static Contact parse(String parse) {
 
         String split[] = parse.split(" ");
 
@@ -43,7 +47,7 @@ public class Parser {
             if (splitPart.charAt(splitPart.length() - 1) == ',') {
                 lastName = splitPart.substring(0, splitPart.length() - 1);
             } else {//Vorname noch nicht gefunden
-                if (firstName.isEmpty()) {
+                if (firstName.isEmpty() && zaehler < split.length - 1) {
                     firstName = splitPart;
                 } else {
                     if (lastName.isEmpty()) {
@@ -56,26 +60,6 @@ public class Parser {
             zaehler++;
         }
 
-        Result result = new Result();
-        // Leeres Feld = Falsch
-        if (salutation == Salutations.NOT_SPECIFIED && title.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
-            String error = "Feld ist leer";
-            result.addError(error);
-        }
-        // Weder anrede noch Vorname gefunden 
-        if (salutation == Salutations.NOT_SPECIFIED && firstName.isEmpty()) {
-
-            String error = "Keine Anrede gefunden";
-            result.addError(error);
-
-            error = "Keinen Vorname gefunden";
-            result.addError(error);
-        }
-        //Kein Nachname angegeben
-        if (lastName.isEmpty()) {
-            String error = "Keinen Nachname angegeben";
-            result.addError(error);
-        }
         //Ueberpruefung auf Grossschreibung
         if (!firstName.isEmpty() && !Character.isUpperCase(firstName.charAt(0))) {
             String newFirstName = firstName.substring(0, 1).toUpperCase();
@@ -111,9 +95,7 @@ public class Parser {
             }
 
         }
-        Contact contact = new Contact(parse, salutation, title, gender, firstName, lastName);
-        result.setContact(contact);
-        return result;
+        return new Contact(parse, salutation, title, gender, firstName, lastName);
     }
 
 }

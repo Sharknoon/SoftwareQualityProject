@@ -1,12 +1,11 @@
 package teamcoffee.softwarequalityproject.enums;
 
 /**
+ * Erstellung von Geschlechts-Enums zur besseren Verarbeitung des Eingabestrings
+ * Zwie dessen Get bzw. Set Methoden
  *
  * @author Josua Frank
  */
-
-// Erstellung von Geschlechts-Enums zur besseren Verarbeitung des Eingabestrings
-// Zwie dessen Get bzw. Set Methoden
 public enum Genders {
     NOT_SPECIFIED("Nicht angegeben"),
     MALE("Männlich"),
@@ -19,6 +18,10 @@ public enum Genders {
         this.name = s;
     }
 
+    /**
+     * Gibt den Anzeigenamen zurück
+     * @return den Anzeigenamen
+     */
     public String getName() {
         return name;
     }

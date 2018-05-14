@@ -6,9 +6,8 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -18,10 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -32,10 +28,16 @@ import teamcoffee.softwarequalityproject.enums.Genders;
 import teamcoffee.softwarequalityproject.enums.Languages;
 import teamcoffee.softwarequalityproject.enums.LetterSalutations;
 import teamcoffee.softwarequalityproject.enums.Salutations;
+import teamcoffee.softwarequalityproject.enums.Titles;
 import teamcoffee.softwarequalityproject.models.Contact;
-import teamcoffee.softwarequalityproject.models.Result;
 import teamcoffee.softwarequalityproject.logic.Parser;
 
+/**
+ * Dies ist die Controllerklasse (Verbindungsklasse zwischen dem Code und der
+ * Oberfläche)
+ *
+ * @author Josua Frank
+ */
 public class FXMLController implements Initializable {
 
     @FXML
@@ -72,14 +74,23 @@ public class FXMLController implements Initializable {
     private final BooleanProperty MISSING_FIRSTNAME = new SimpleBooleanProperty();
     private final BooleanProperty MISSING_SALUTATION = new SimpleBooleanProperty();
 
+    /**
+     * Wird aufgerufen, wenn auf den Knopf zuordnen geklickt wurde
+     *
+     * @param event kann ignoriert werden
+     */
     @FXML
     private void onButtonParseClicked(ActionEvent event) {
         String input = textFieldInput.getText();
         textFieldInput.clear();
-        Result result = Parser.parse(input);
-        bindContact(result.getContact());
+        bindContact(Parser.parse(input));
     }
 
+    /**
+     * Wird aufgerufen, wenn auf den Knopf Speichern geklickt wurde
+     *
+     * @param event kann ignoriert werden
+     */
     @FXML
     private void onButtonSaveClicked(ActionEvent event) {
         boolean success = DB.saveContact(currentContact);
@@ -92,14 +103,56 @@ public class FXMLController implements Initializable {
         }
     }
 
+    /**
+     * Wird aufgerufen, wenn der Knopf Kontakte geklickt wurde
+     *
+     * @param event kann ignoriert werden
+     */
     @FXML
     private void onButtonContactsClicked(ActionEvent event) {
         DB.openContactFolder();
     }
 
+    /**
+     * Wird aufgerufen, wenn der Knopf Neuer Titel geklickt wurde
+     *
+     * @param event kann ignoriert werden
+     */
+    @FXML
+    private void onButtonAddTitleClicked(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Neuer Titel");
+        dialog.setHeaderText("Neuen Titel hinzufügen");
+        dialog.setContentText("Bitte geben Sie den Titel ein:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            Titles titles = DB.getTitles();
+            titles.getTitles().add(name);
+            DB.saveTitles(titles);
+        });
+    }
+
     private final ObjectProperty<Genders> selectedGender = new SimpleObjectProperty<>(Genders.NOT_SPECIFIED);
     private final ObjectProperty<Languages> selectedLanugage = new SimpleObjectProperty<>(Languages.NOT_SPECIFIED);
 
+    /**
+     * Initialisiert die Oberfläche:
+     *
+     * - setzt die maximale Eingabelänge derFelder auf max 100
+     *
+     * - registriert die TAB Taste auf das Eingabetextfeld
+     *
+     * - Setzt den Knopf Speichern nur unter Bedingungen auf klickbar
+     *
+     * - Ändert bei veränderter Sprache und Geschlecht automatisch die Anrede,
+     * Briefanrede und das Geschlecht
+     *
+     * - Prüft und setzt die Fehlertexte
+     *
+     * @param url kann ignoriert werden
+     * @param rb kann ignoriert werden
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         reset();
@@ -191,6 +244,9 @@ public class FXMLController implements Initializable {
         initErrorText();
     }
 
+    /**
+     * Setzt die Felder zurück und leert den Kontakt
+     */
     private void reset() {
         bindContact(new Contact());
     }
@@ -200,6 +256,9 @@ public class FXMLController implements Initializable {
     private final Text textMissingLastname = new Text("Nachname benötigt   ");
     private final Text textMissingSalutation = new Text("Anrede dringend empfohlen   ");
 
+    /**
+     * Initialisiert die Fehlertexte und prüft ob sie angezeigt werden müssen
+     */
     private void initErrorText() {
         textMissingFirstnameOrSalutation.setFill(Color.RED);
         textMissingFirstname.setFill(Color.ORANGE);
@@ -219,6 +278,10 @@ public class FXMLController implements Initializable {
         });
     }
 
+    /**
+     * Prüft, ob und welche Fehler angezeigt werden müssen
+     * @param list Die Liste mit allen Fehlern
+     */
     private void setErrorTexts(ObservableList<Text> list) {
         textFlowError.getChildren().setAll(list
                 .filtered(t -> {
@@ -244,6 +307,10 @@ public class FXMLController implements Initializable {
                 }));
     }
 
+    /**
+     * Bindet Die Oberfläche an das Kontalt-bean
+     * @param contact Der Kontakt
+     */
     private void bindContact(Contact contact) {
         if (contact == null) {
             currentContact = new Contact();

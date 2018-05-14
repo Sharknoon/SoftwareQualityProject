@@ -4,11 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Verwaltung der Anreden
  *
  * @author Josua Frank
  */
-
-// Verwaltung der einzelnen Anreden
 public enum Salutations {
     NOT_SPECIFIED("Nicht angegeben", Languages.NOT_SPECIFIED, Genders.NOT_SPECIFIED, "-"),
     FRAU("Frau", Languages.GERMAN, Genders.FEMALE),
@@ -33,18 +32,38 @@ public enum Salutations {
         alternativeNames = Arrays.asList(alternatives);
     }
 
+    /**
+     * Gibt den Anzeigenamen zurück
+     *
+     * @return Den Anzeigenamen
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gitb die Sprache zurück
+     *
+     * @return Die Sprache
+     */
     public Languages getLanguage() {
         return language;
     }
 
+    /**
+     * Gibt das Geschlecht zurück
+     *
+     * @return Das Geschlecht
+     */
     public Genders getGender() {
         return gender;
     }
 
+    /**
+     * Gibt sie alternativen Namen zu den Anreden, z.B. Mrs. zu Ms. zurück
+     *
+     * @return Die alternativen Namen
+     */
     public List<String> getAlternativeNames() {
         return alternativeNames;
     }
@@ -53,8 +72,13 @@ public enum Salutations {
     public String toString() {
         return getName();
     }
-    
-    // Generierung der Anrede Anhand von Spezifikationen aus dem Einganedtring
+
+    /**
+     * Ändert das Geschlecht basierend auf dem neuen Geschlecht und der Sprache
+     *
+     * @param newGender Das neue Geschlecht
+     * @return Die neue Anrede mit der selben Sprache und dem neuen Geschlecht
+     */
     public Salutations changeGender(Genders newGender) {
         if (newGender == null) {
             return NOT_SPECIFIED;
@@ -107,6 +131,12 @@ public enum Salutations {
         return NOT_SPECIFIED;
     }
 
+    /**
+     * Ändert die Sprache basierend auf der neuen Sprache und dem Geschlecht
+     *
+     * @param newLanguage Die neue Sprache
+     * @return Die neue Anrede mit dem selben Geschlecht und der neuen Sprache
+     */
     public Salutations changeLanugage(Languages newLanguage) {
         if (newLanguage == null) {
             newLanguage = Languages.GERMAN;

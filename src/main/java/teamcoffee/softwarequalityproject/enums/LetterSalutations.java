@@ -4,11 +4,10 @@ import java.util.Arrays;
 import teamcoffee.softwarequalityproject.models.Contact;
 
 /**
+ * Verwaltung der Briefanreden
  *
  * @author Josua Frank
  */
-
-// Verwaltung der Briefanreden 
 public enum LetterSalutations {
     NOT_SPECIFIED("Nicht angegeben", Languages.NOT_SPECIFIED, Genders.NOT_SPECIFIED),
     FRAU_HERR("Sehr geehrte/r", Languages.GERMAN, Genders.X),
@@ -31,10 +30,20 @@ public enum LetterSalutations {
         this.gender = gender;
     }
 
+    /**
+     * Gibt den Anzeigenamen zurück
+     *
+     * @return Den Anzeigenamen
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gibt die Sprache dieser Briefanrede zurück
+     *
+     * @return Die Sprache
+     */
     public Languages getLanguage() {
         return language;
     }
@@ -44,10 +53,22 @@ public enum LetterSalutations {
         return getName();
     }
 
+    /**
+     * Gibt das Geschlecht zurück
+     *
+     * @return Das Geschlecht
+     */
     public Genders getGender() {
         return gender;
     }
-    // Erstellung der Briefanrede Anhand von Spezifikationen im Eingabestring
+
+    /**
+     * Erstellung der Briefanrede Anhand von Spezifikationen im Eingabestring
+     *
+     * @param contact Der Kontakt dessen Briefanrede generiert werden soll
+     * @return Die Briefanrede, bei fehlerhaften angaben die geschlechtsneutrale
+     * Briefanrede auf deutsch
+     */
     public static String generateLetterSalutation(Contact contact) {
         if (contact == null) {
             return FRAU_HERR.getName();
