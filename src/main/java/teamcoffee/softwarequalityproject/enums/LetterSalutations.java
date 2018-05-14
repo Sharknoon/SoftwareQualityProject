@@ -7,6 +7,8 @@ import teamcoffee.softwarequalityproject.models.Contact;
  *
  * @author Josua Frank
  */
+
+// Verwaltung der Briefanreden 
 public enum LetterSalutations {
     NOT_SPECIFIED("Nicht angegeben", Languages.NOT_SPECIFIED, Genders.NOT_SPECIFIED),
     FRAU_HERR("Sehr geehrte/r", Languages.GERMAN, Genders.X),
@@ -45,7 +47,7 @@ public enum LetterSalutations {
     public Genders getGender() {
         return gender;
     }
-
+    // Erstellung der Briefanrede Anhand von Spezifikationen im Eingabestring
     public static String generateLetterSalutation(Contact contact) {
         if (contact == null) {
             return FRAU_HERR.getName();

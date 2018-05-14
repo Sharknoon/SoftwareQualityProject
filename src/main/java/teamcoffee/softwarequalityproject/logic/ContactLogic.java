@@ -11,6 +11,8 @@ import teamcoffee.softwarequalityproject.enums.Genders;
  *
  * @author frank
  */
+
+// Festlegung der Default Werte
 public class ContactLogic {
     
     public int currentLanguage = 1;

@@ -9,6 +9,7 @@ package teamcoffee.softwarequalityproject.enums;
  *
  * @author frank
  */
+// Zur Verwaltung des Programmsprachen
 public enum Languages {
     NOT_SPECIFIED,
     GERMAN,

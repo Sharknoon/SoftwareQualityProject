@@ -10,6 +10,7 @@ public class Title {
 
     private static String title;
     
+    // Überprüfung des String auf einen möglichen Titel (Dok., usw.)
     public static boolean isTitle(String string) {
         title = string.trim().toLowerCase();
         return DB

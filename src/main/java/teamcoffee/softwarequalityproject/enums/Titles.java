@@ -17,7 +17,8 @@ import java.util.Set;
 public class Titles {
 
     private final Set<String> titles = new HashSet<>();
-
+    
+    // Verwaltung der einzelnen Titel
     public Titles() {
         //Vorgelernte Ausdruecke
         titles.add("Dr.");

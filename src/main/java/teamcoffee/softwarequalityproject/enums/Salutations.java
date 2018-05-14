@@ -7,6 +7,8 @@ import java.util.List;
  *
  * @author Josua Frank
  */
+
+// Verwaltung der einzelnen Anreden
 public enum Salutations {
     NOT_SPECIFIED("Nicht angegeben", Languages.NOT_SPECIFIED, Genders.NOT_SPECIFIED, "-"),
     FRAU("Frau", Languages.GERMAN, Genders.FEMALE),
@@ -51,7 +53,8 @@ public enum Salutations {
     public String toString() {
         return getName();
     }
-
+    
+    // Generierung der Anrede Anhand von Spezifikationen aus dem Einganedtring
     public Salutations changeGender(Genders newGender) {
         if (newGender == null) {
             return NOT_SPECIFIED;
