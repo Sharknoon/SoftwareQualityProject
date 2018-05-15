@@ -17,6 +17,7 @@
 }
 .jfx-text-field {
     -fx-prompt-text-fill: #777777;
+    -jfx-focus-color: #2196f3;
     
 }
 .jfx-combo-box > .list-cell {

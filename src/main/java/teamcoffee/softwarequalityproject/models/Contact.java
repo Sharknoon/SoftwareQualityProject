@@ -42,7 +42,7 @@ public class Contact {
         this.gender.set(gender == null ? Genders.NOT_SPECIFIED : gender);
         this.firstname.set(firstname == null ? "" : firstname);
         this.lastname.set(lastname == null ? "" : lastname);
-        this.nobilityTitles.addAll(nobilityTitles == null ? List.of() : nobilityTitles);
+        this.nobilityTitles.addAll(nobilityTitles == null ? new ArrayList<>() : nobilityTitles);
         this.letter_salutation.set(LetterSalutations.generateLetterSalutation(this));
 
         bindLetterSalutationGenerator();

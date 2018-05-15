@@ -10,11 +10,11 @@
     <name>SoftwareQualityProject</name>
 
     <properties>
-        <java.version>9</java.version>
+        <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>teamcoffee.softwarequalityproject.MainApp</mainClass>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <organization>
@@ -50,11 +50,6 @@
     
     <dependencies>
         <dependency>
-            <groupId>com.jfoenix</groupId>
-            <artifactId>jfoenix</artifactId>
-            <version>9.0.3</version>
-        </dependency>
-        <dependency>
             <groupId>org.hildan.fxgson</groupId>
             <artifactId>fx-gson</artifactId>
             <version>3.1.0</version>
@@ -70,6 +65,11 @@
             <version>4.12</version>
             <scope>test</scope>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>8.0.2</version>
         </dependency>
     </dependencies>
 </project>

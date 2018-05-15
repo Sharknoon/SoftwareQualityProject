@@ -32,7 +32,9 @@ public class KontaktparserTest {
         testcases.add("Herr Dr. Sandro Gutmensch");
         testresults.add(new Contact("Herr Dr. Sandro Gutmensch", Salutations.HERR, "Dr.", Genders.MALE, "Sandro", "Gutmensch", null));
         testcases.add("Professor Heinrich Freiherr vom Wald");
-        testresults.add(new Contact("Professor Heinrich Freiherr vom Wald", Salutations.NOT_SPECIFIED, "Professor", Genders.NOT_SPECIFIED, "Heinrich", "vom Wald", List.of("Freiherr")));
+        ArrayList<String> tmp = new ArrayList<>();
+        tmp.add("Freiherr");
+        testresults.add(new Contact("Professor Heinrich Freiherr vom Wald", Salutations.NOT_SPECIFIED, "Professor", Genders.NOT_SPECIFIED, "Heinrich", "vom Wald", tmp));
         testcases.add("Mrs. Doreen Faber");
         testresults.add(new Contact("Mrs. Doreen Faber", Salutations.MS, null, Genders.FEMALE, "Doreen", "Faber", null));
         testcases.add("Mme. Charlotte Noir");
