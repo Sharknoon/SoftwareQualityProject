@@ -112,7 +112,7 @@ public class TextInputDialog extends Dialog<String> {
 
                     setResult(newResultValue);
 
-                    if (priorResultValue.equals(newResultValue)) {
+                    if (priorResultValue == newResultValue) {
                         close();
                     }
                 });
