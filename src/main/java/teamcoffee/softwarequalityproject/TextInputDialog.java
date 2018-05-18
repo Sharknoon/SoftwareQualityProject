@@ -27,7 +27,7 @@ package teamcoffee.softwarequalityproject;
 //import javafx.scene.control.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.javafx.scene.control.skin.resources.ControlResources;
+import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.event.ActionEvent;
@@ -143,8 +143,6 @@ public class TextInputDialog extends Dialog<String> {
 
         dialogPane.contentTextProperty().addListener(o -> updateGrid());
 
-        setTitle(ControlResources.getString("Dialog.confirm.title"));
-        dialogPane.setHeaderText(ControlResources.getString("Dialog.confirm.header"));
         dialogPane.getStyleClass().add("text-input-dialog");
         dialogPane.getStylesheets().add("/styles/Styles.css");
         dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
